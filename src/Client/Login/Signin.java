@@ -1,5 +1,7 @@
 package Client.Login;
 
+import Client.ClientWaitingRoom;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -128,7 +130,8 @@ public class Signin extends JFrame {
                 srs = stmt.executeQuery(sql);
                 if (srs.next()) {
                     if (srs.getString("Pwd").equals(pwd)) {
-                        System.out.println("로그인 성공!");
+                        new ClientWaitingRoom(srs.getString("NickName"), "localhost", 8080);
+                        setVisible(false);
                     } else {
                         System.out.println("비밀번호가 틀렸습니다");
                     }

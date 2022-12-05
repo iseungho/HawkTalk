@@ -110,7 +110,7 @@ public class Signup extends JFrame {
                 try {
                     StringBuilder sb = new StringBuilder();
                     sb.append("insert into usertable (Name, ClassNumber, NickName, ID, Pwd) values ('").append(userData.get(0))
-                            .append("', '").append(userData.get(1)).append("', '").append(userData.get(2)).append("', '")
+                            .append("', '").append(userData.get(1).toUpperCase()).append("', '").append(userData.get(2)).append("', '")
                             .append(userData.get(3)).append("', '").append(userData.get(4)).append("');");
                     String sql = sb.toString();
                     stmt.executeUpdate(sql); // 레코드 추가

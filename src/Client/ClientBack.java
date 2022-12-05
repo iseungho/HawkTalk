@@ -38,18 +38,18 @@ public class ClientBack extends Thread {
 				message = in.readUTF();
 				if (message.contains("!ResetUserList")) {
 					// !ResetUserList이라는 수식어가 붙어있을 경우엔 닉네임으로 간주합니다.
-					clientWaitingRoom.userList.setText(null);
+					clientWaitingRoom.userListArea.setText(null);
 					nickNameList.add(message.substring(14));
 					clientWaitingRoom.resetUserList(nickNameList);
 				} else if (message.contains("님이 입장하셨습니다.")) {
 					// ~~ 님이 입장하셨습니다. 라는 식별자를 받으면 기존의 닉네임 리스트 초기화 후 새로 입력시킵니다.
 					nickNameList.clear();
-					clientWaitingRoom.userList.setText(null);
+					clientWaitingRoom.userListArea.setText(null);
 					clientWaitingRoom.appendMessage(message);
 				} else if (message.contains("님이 퇴장하셨습니다.")) {
 					// ~~ 님이 퇴장하셨습니다. 라는 식별자를 받으면 기존의 닉네임 리스트 초기화 후 새로 입력시킵니다.
 					nickNameList.clear();
-					clientWaitingRoom.userList.setText(null);
+					clientWaitingRoom.userListArea.setText(null);
 					clientWaitingRoom.appendMessage(message);
 				} else {
 					// 위 모든 값이 아닐 시엔 일반 메세지로 간주합니다.

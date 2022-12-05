@@ -89,18 +89,6 @@ public class Signin extends JFrame {
         signPanel.setOpaque(false);
         add(signPanel);
 
-        /*
-        JPanel sInPanel = new JPanel();
-        sInPanel.add(signin, JLabel.CENTER);
-        sInPanel.setOpaque(false);
-        add(sInPanel);
-
-        JPanel sUpPanel = new JPanel();
-        sUpPanel.add(signup, JLabel.CENTER);
-        sUpPanel.setOpaque(false);
-        add(sUpPanel);
-        */
-
         JPanel sPanel = new JPanel();
         sPanel.add(signup, JLabel.CENTER);
         sPanel.add(signin, JLabel.CENTER);

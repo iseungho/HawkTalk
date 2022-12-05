@@ -14,12 +14,11 @@ public class ClientWaitingRoom extends JFrame {
     ClientBack clientBack = new ClientBack();
     JPanel clientPanel = new JPanel();
     JLabel userLabel = new JLabel("유저 목록");
-    JLabel User = new JLabel(nickName);
     JTextField chatField = new JTextField(45);
     JButton sendBtn = new JButton("전송");
 
-    TextArea chatedList = new TextArea(30, 50);
-    TextArea userList = new TextArea(30, 15);
+    TextArea chatedArea = new TextArea(30, 50);
+    TextArea userListArea = new TextArea(30, 15);
 
     public ClientWaitingRoom(String nickName, String ipAddress, int portNum) {
         this.nickName = nickName;
@@ -30,8 +29,8 @@ public class ClientWaitingRoom extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        chatedList.setEditable(false);
-        userList.setEditable(false);
+        chatedArea.setEditable(false);
+        userListArea.setEditable(false);
         chatField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -56,10 +55,12 @@ public class ClientWaitingRoom extends JFrame {
             }
         });
 
-        clientPanel.add(User);
-        clientPanel.add(chatedList);
-        clientPanel.add(userLabel);
-        clientPanel.add(userList);
+        clientPanel.add(chatedArea);
+        JPanel userPanel = new JPanel(new BorderLayout());
+        userLabel.setHorizontalAlignment(JLabel.CENTER);
+        userPanel.add(userLabel, BorderLayout.NORTH);
+        userPanel.add(userListArea, BorderLayout.SOUTH);
+        clientPanel.add(userPanel);
         clientPanel.add(chatField);
         clientPanel.add(sendBtn);
         add(clientPanel);
@@ -70,14 +71,13 @@ public class ClientWaitingRoom extends JFrame {
     }
 
     public void appendMessage(String Message) {
-        chatedList.append(Message);
+        chatedArea.append(Message);
     }
 
     public void resetUserList(ArrayList<String> nickNameList) {
         // 유저목록을 유저리스트에 띄워줍니다.
-        userList.setText(null);
         for (String nickName : nickNameList) {
-            userList.append(nickName + "\n");
+            userListArea.append(nickName + "\n");
         }
     }
 }

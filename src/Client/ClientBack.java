@@ -40,7 +40,7 @@ public class ClientBack extends Thread {
 					// !ResetUserList이라는 수식어가 붙어있을 경우엔 닉네임으로 간주합니다.
 					clientWaitingRoom.userListArea.setText(null);
 					nickNameList.add(message.substring(14));
-					clientWaitingRoom.resetUserList(nickNameList);
+					clientWaitingRoom.resetUserListArea(nickNameList);
 				} else if (message.contains("님이 입장하셨습니다.")) {
 					// ~~ 님이 입장하셨습니다. 라는 식별자를 받으면 기존의 닉네임 리스트 초기화 후 새로 입력시킵니다.
 					nickNameList.clear();

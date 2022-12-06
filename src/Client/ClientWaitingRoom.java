@@ -18,19 +18,18 @@ public class ClientWaitingRoom extends JFrame {
     JButton sendBtn = new JButton("전송");
 
     TextArea chatedArea = new TextArea(30, 50);
-    TextArea userListArea = new TextArea(30, 15);
+    TextArea userListArea = new TextArea(20, 15);
 
     public ClientWaitingRoom(String nickName, String ipAddress, int portNum) {
         this.nickName = nickName;
         setTitle("HawkTalk");
         setVisible(true);
-        setLocationRelativeTo(null);
         setSize(750, 600);
-        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         chatedArea.setEditable(false);
         userListArea.setEditable(false);
+
         chatField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -56,11 +55,16 @@ public class ClientWaitingRoom extends JFrame {
         });
 
         clientPanel.add(chatedArea);
+
         JPanel userPanel = new JPanel(new BorderLayout());
         userLabel.setHorizontalAlignment(JLabel.CENTER);
         userPanel.add(userLabel, BorderLayout.NORTH);
         userPanel.add(userListArea, BorderLayout.SOUTH);
         clientPanel.add(userPanel);
+        /*
+        clientPanel.add(userLabel);
+        clientPanel.add(userListArea);
+        */
         clientPanel.add(chatField);
         clientPanel.add(sendBtn);
         add(clientPanel);
@@ -74,10 +78,14 @@ public class ClientWaitingRoom extends JFrame {
         chatedArea.append(Message);
     }
 
-    public void resetUserList(ArrayList<String> nickNameList) {
+    public void resetUserListArea(ArrayList<String> nickNameList) {
         // 유저목록을 유저리스트에 띄워줍니다.
         for (String nickName : nickNameList) {
             userListArea.append(nickName + "\n");
         }
+    }
+
+    public static void main(String[] args) {
+        new ClientWaitingRoom("test", "localhost", 8080);
     }
 }

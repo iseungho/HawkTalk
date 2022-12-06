@@ -95,8 +95,8 @@ public class ServerBack extends Thread {
 				// 유저가 접속을 종료하면 여기서 오류가 발생합니다.
 				// 따라서 발생한 값을 다시 모든 클라이언트 들에게 전송시켜줍니다.
 				// System.out.println(nickName + "님이 퇴장하셨습니다.");
-				sendAll("[서버]: " + nickName + "님이 퇴장하셨습니다.\n");
 				removeClient(this, nickName);
+				sendAll("[서버]: " + nickName + "님이 퇴장하셨습니다.\n");
 				for (String nickName : nickNameList) {
 					sendAll("!ResetUserList" + nickName);
 				}

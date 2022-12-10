@@ -31,7 +31,7 @@ public class ServerBack extends Thread {
 
 	public void run() {
 		try {
-			nickNameList.add("Admin"); // 유저목록의 첫 번째 서버(Admin)를 추가합니다.
+			// nickNameList.add("Admin");
 			while (true) {
 				System.out.println("새 접속을 대기합니다...");
 				socket = serversocket.accept(); // 포트 번호와 일치한 클라이언트의 소켓을 받습니다.
@@ -100,6 +100,7 @@ public class ServerBack extends Thread {
 						if (!roomMap.containsKey(room)) {
 							sendAll("[서버]: 채팅방 " + room + "이(가) 생성되었습니다.\n");
 							roomNameList.add(room);
+							System.out.println(roomNameList);
 							// System.out.println(portNum + roomMap.size() + 1);
 							roomMap.put(room, new ServerBack(portNum + roomMap.size() + 1));
 							for (String roomName : roomNameList) {
@@ -110,11 +111,16 @@ public class ServerBack extends Thread {
 						}
 					} else if (message.contains("!RemoveRoom")) {
 						String room = message.substring(11);
-						sendAll("[서버]: 채팅방 " + room + "이(가) 제거되었습니다.\n");
-						roomNameList.remove(room);
-						roomMap.remove(room);
-						for (String roomName : roomNameList) {
-							sendAll("!ResetRoomList" + roomName);
+						if (roomMap.get(room).nickNameList.size() == 0) {
+							sendAll("[서버]: 채팅방 " + room + "이(가) 제거되었습니다.\n");
+							roomNameList.remove(room);
+							sendAll("!RemoveRoom");
+							roomMap.remove(room);
+							for (String roomName : roomNameList) {
+								sendAll("!ResetRoomList" + roomName);
+							}
+						} else {
+							sendAll("[서버]: 채팅방 " + room + "이(가) 제거되지 않았습니다.\n");
 						}
 					} else {
 						sendAll(message);

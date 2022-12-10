@@ -50,6 +50,8 @@ public class ClientBack extends Thread {
 					clientWaitingRoom.roomList.removeAll();
 					roomNameList.add(message.substring(14));
 					clientWaitingRoom.resetRoomList(roomNameList);
+				} else if (message.contains("!RemoveRoom")) {
+					roomNameList.clear();
 				} else if (message.contains("님이 입장하셨습니다.") || message.contains("님이 퇴장하셨습니다.")) {
 					// ~~ 님이 입장하셨습니다. 라는 식별자를 받으면 기존의 닉네임 리스트 초기화 후 새로 입력시킵니다.
 					nickNameList.clear();

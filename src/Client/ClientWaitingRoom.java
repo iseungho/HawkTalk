@@ -20,6 +20,10 @@ public class ClientWaitingRoom extends JFrame {
     JList<String> roomList;
     JButton createNewRoomBtn = new JButton("채팅방 생성");
 
+    PopupMenu pm = new PopupMenu();
+    MenuItem pmItem1 = new MenuItem("Enter this chat room");
+    MenuItem pmItem2 = new MenuItem("Remove this chat room");
+
     TextArea chatedList = new TextArea(30, 50);
     TextArea userListArea = new TextArea(30, 15);
 
@@ -64,7 +68,6 @@ public class ClientWaitingRoom extends JFrame {
         clientPanel.add(userListArea);
         clientPanel.add(chatField);
         clientPanel.add(sendBtn);
-        add(clientPanel);
 
         JPanel roomPanel = new JPanel(new BorderLayout());
         roomLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -76,10 +79,13 @@ public class ClientWaitingRoom extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                if (e.getClickCount() == 2) {
+                if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
                     String roomName = roomList.getSelectedValue();
                     // clientBack.sendMessage("[서버]: " + nickName + "님이 " + roomName + "에 입장하셨습니다.\n");
                     new ChattingRoom(nickName, roomName, ipAddress, portNum + roomList.getSelectedIndex() + 1);
+                } else if (e.getButton() == MouseEvent.BUTTON3) {
+                    // System.out.println(String.valueOf(e.getX()) + ", " + String.valueOf(e.getY()));
+                    pm.show(roomList, e.getX() + 170, e.getY() + 60);
                 }
             }
         });
@@ -97,6 +103,32 @@ public class ClientWaitingRoom extends JFrame {
         clientPanel.add(roomPanel);
         clientPanel.add(chatField);
         clientPanel.add(sendBtn);
+
+        pm.add(pmItem1);
+        pmItem1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (roomList.getSelectedValue() != null) {
+                    new ChattingRoom(nickName, roomList.getSelectedValue(), ipAddress, portNum + roomList.getSelectedIndex() + 1);
+                } else {
+                    System.out.println("Please, Click and Select");
+                }
+            }
+        });
+
+        pm.add(pmItem2);
+        pmItem2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (roomList.getSelectedValue() != null) {
+                    clientBack.sendMessage("!RemoveRoom" + roomList.getSelectedValue());
+                } else {
+                    System.out.println("Please, Click and Select");
+                }
+            }
+        });
+        clientPanel.add(pm);
+
         add(clientPanel);
 
         clientBack.setGui(this);

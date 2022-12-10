@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class LoginLayout extends JFrame{
     private JTextField IdTextField;
-    private JPasswordField passwordField;
+    private JPasswordField PasswordField;
     private JButton LogInButton;
     private JButton SignUpButton;
     private JPanel LoginPanel;
@@ -54,7 +54,7 @@ public class LoginLayout extends JFrame{
                     JOptionPane.showMessageDialog(null,"아이디를 입력하세요");
                     return;
                 }
-                String pwd = passwordField.getText();
+                String pwd = PasswordField.getText();
                 try {
                     sb = new StringBuilder();
                     sql = sb.append("select * from usertable where ID='").append(id).append("';").toString();
@@ -76,7 +76,7 @@ public class LoginLayout extends JFrame{
             }
         }
 
-        passwordField.addActionListener(new MyActionListener());
+        PasswordField.addActionListener(new MyActionListener());
         LogInButton.addActionListener(new MyActionListener());
 
         SignUpButton.addActionListener(new ActionListener() {

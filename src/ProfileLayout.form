@@ -74,7 +74,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="b6d86" class="javax.swing.JButton" binding="닉네임변경Button" default-binding="true">
+          <component id="b6d86" class="javax.swing.JButton" binding="ChangeNickButton">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -85,7 +85,7 @@
               <text value="닉네임 변경"/>
             </properties>
           </component>
-          <component id="793bc" class="javax.swing.JButton" binding="비밀번호변경Button" default-binding="true">
+          <component id="793bc" class="javax.swing.JButton" binding="ChangePassButton">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -96,7 +96,7 @@
               <text value="비밀번호 변경"/>
             </properties>
           </component>
-          <component id="4591f" class="javax.swing.JButton" binding="회원탈퇴Button" default-binding="true">
+          <component id="4591f" class="javax.swing.JButton" binding="WithdrawalButton">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>

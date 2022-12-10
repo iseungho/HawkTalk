@@ -1,9 +1,9 @@
 import javax.swing.*;
 
 public class ProfileLayout extends JFrame{
-    private JButton 닉네임변경Button;
-    private JButton 비밀번호변경Button;
-    private JButton 회원탈퇴Button;
+    private JButton ChangeNickButton;
+    private JButton ChangePassButton;
+    private JButton WithdrawalButton;
     private JPanel ProfilePanel;
 
     public ProfileLayout(){

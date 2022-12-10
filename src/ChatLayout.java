@@ -1,15 +1,22 @@
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ChatLayout extends JFrame{
     private JPanel ChatPanel;
-    private JButton 전송Button;
+    private JButton SendButton;
     private JTextField ChatField;
-    private JList list1;
-    private JTextArea textArea1;
     private JCheckBox ProfileCheckBox;
-    private JButton 방생성Button;
+    private JButton NewRoomButton;
+    private JTextArea ChatArea;
+    private JList RoomList;
+    private JTextArea UserList;
+
+    //파라미터: 색상, 선 두께, border의 모서리를 둥글게 할 것인지
+    private LineBorder bb = new LineBorder(Color.black, 1, false);
+
 
     public ChatLayout(){
         setContentPane(ChatPanel);
@@ -18,6 +25,9 @@ public class ChatLayout extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+        ChatArea.setBorder(bb);
+        RoomList.setBorder(bb);
+        UserList.setBorder(bb);
         ProfileCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

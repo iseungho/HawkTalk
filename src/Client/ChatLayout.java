@@ -27,8 +27,8 @@ public class ChatLayout extends JFrame {
     private JPanel helloPanel;
     private ResultSet srs = null;
     PopupMenu pm = new PopupMenu();
-    MenuItem pmItem1 = new MenuItem("Enter this chat room");
-    MenuItem pmItem2 = new MenuItem("Remove this chat room");
+    MenuItem pmItem1 = new MenuItem("Enter room");
+    MenuItem pmItem2 = new MenuItem("Remove room");
 
     //파라미터: 색상, 선 두께, border의 모서리를 둥글게 할 것인지
     private LineBorder bb = new LineBorder(Color.black, 1, false);

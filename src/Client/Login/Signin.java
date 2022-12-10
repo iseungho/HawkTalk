@@ -98,6 +98,7 @@ public class Signin extends JFrame {
         setSize(400, 600);
         setResizable(false);
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 
     private StringBuilder sb;

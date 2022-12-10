@@ -1,12 +1,9 @@
 package Client;
 
-import javax.swing.*;
+import java.util.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
+import java.awt.event.*;
+import javax.swing.*;
 
 public class ClientWaitingRoom extends JFrame {
     //클라이언트용 채팅창
@@ -14,22 +11,29 @@ public class ClientWaitingRoom extends JFrame {
     ClientBack clientBack = new ClientBack();
     JPanel clientPanel = new JPanel();
     JLabel userLabel = new JLabel("유저 목록");
+    JLabel User = new JLabel(nickName);
     JTextField chatField = new JTextField(45);
     JButton sendBtn = new JButton("전송");
 
-    TextArea chatedArea = new TextArea(30, 50);
-    TextArea userListArea = new TextArea(20, 15);
+    JLabel roomLabel = new JLabel("채팅방 목록");
+    DefaultListModel<String> roomModel;
+    JList<String> roomList;
+    JButton createNewRoomBtn = new JButton("채팅방 생성");
+
+    TextArea chatedList = new TextArea(30, 50);
+    TextArea userListArea = new TextArea(30, 15);
 
     public ClientWaitingRoom(String nickName, String ipAddress, int portNum) {
         this.nickName = nickName;
         setTitle("HawkTalk");
         setVisible(true);
+        // setLocationRelativeTo(null);
         setSize(750, 600);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        chatedArea.setEditable(false);
+        chatedList.setEditable(false);
         userListArea.setEditable(false);
-
         chatField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -54,17 +58,43 @@ public class ClientWaitingRoom extends JFrame {
             }
         });
 
-        clientPanel.add(chatedArea);
-
-        JPanel userPanel = new JPanel(new BorderLayout());
-        userLabel.setHorizontalAlignment(JLabel.CENTER);
-        userPanel.add(userLabel, BorderLayout.NORTH);
-        userPanel.add(userListArea, BorderLayout.SOUTH);
-        clientPanel.add(userPanel);
-        /*
+        clientPanel.add(User);
+        clientPanel.add(chatedList);
         clientPanel.add(userLabel);
         clientPanel.add(userListArea);
-        */
+        clientPanel.add(chatField);
+        clientPanel.add(sendBtn);
+        add(clientPanel);
+
+        JPanel roomPanel = new JPanel(new BorderLayout());
+        roomLabel.setHorizontalAlignment(JLabel.CENTER);
+        roomPanel.add(roomLabel);
+        roomModel = new DefaultListModel<>();
+        roomList = new JList<>(roomModel);
+        roomPanel.add(roomList, BorderLayout.CENTER);
+        roomList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (e.getClickCount() == 2) {
+                    String roomName = roomList.getSelectedValue();
+                    // clientBack.sendMessage("[서버]: " + nickName + "님이 " + roomName + "에 입장하셨습니다.\n");
+                    new ChattingRoom(nickName, roomName, ipAddress, portNum + roomList.getSelectedIndex() + 1);
+                }
+            }
+        });
+        createNewRoomBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String room = JOptionPane.showInputDialog("이름을 입력하세요.");
+                if (room != null) {
+                    clientBack.sendMessage("!CreateRoom" + room);
+                }
+            }
+        });
+        roomPanel.add(createNewRoomBtn, BorderLayout.SOUTH);
+
+        clientPanel.add(roomPanel);
         clientPanel.add(chatField);
         clientPanel.add(sendBtn);
         add(clientPanel);
@@ -75,17 +105,21 @@ public class ClientWaitingRoom extends JFrame {
     }
 
     public void appendMessage(String Message) {
-        chatedArea.append(Message);
+        chatedList.append(Message);
+    }
+
+    public void resetRoomList(ArrayList<String> roomNameList) {
+        roomModel.removeAllElements();
+        for (String roomName : roomNameList) {
+            roomModel.addElement(roomName);
+        }
     }
 
     public void resetUserListArea(ArrayList<String> nickNameList) {
         // 유저목록을 유저리스트에 띄워줍니다.
+        userListArea.setText(null);
         for (String nickName : nickNameList) {
             userListArea.append(nickName + "\n");
         }
-    }
-
-    public static void main(String[] args) {
-        new ClientWaitingRoom("test", "localhost", 8080);
     }
 }

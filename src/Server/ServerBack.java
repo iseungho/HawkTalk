@@ -5,18 +5,21 @@ import java.io.*;
 import java.util.*;
 
 public class ServerBack extends Thread {
-	Vector<ReceiveThread> clientThreadList = new Vector<>(); // 클라이언트의 쓰레드를 저장해줍니다.
-	ArrayList<String> nickNameList = new ArrayList<>(); // 클라이언트의 닉네임을 저장해줍니다.
+	private int portNum;
 	ServerSocket serversocket;
+	Vector<ReceiveThread> clientThreadList = new Vector<>(); // 클라이언트의 쓰레드를 저장해줍니다.
+	ArrayList<String> nickNameList = new ArrayList<>();
+	ArrayList<String> roomNameList = new ArrayList<>();
+	HashMap<String, ServerBack> roomMap = new HashMap<>();
 	Socket socket;
-	int portNum = 8080;
 
-	public ServerBack() {
-		runServer(portNum);
+	public ServerBack(int portNum) {
+		this.portNum = portNum;
+		runServer();
 		start();
 	}
 
-	public void runServer(int portNum) {
+	public void runServer() {
 		try {
 			Collections.synchronizedList(clientThreadList); // 교통정리를 해준다.( clientList를 네트워크 처리해주는것 )
 			serversocket = new ServerSocket(portNum); // 서버에 입력된 특정 Port만 접속을 허가하기 위해 사용했습니다.
@@ -26,7 +29,6 @@ public class ServerBack extends Thread {
 		}
 	}
 
-	@Override
 	public void run() {
 		try {
 			nickNameList.add("Admin"); // 유저목록의 첫 번째 서버(Admin)를 추가합니다.
@@ -43,11 +45,11 @@ public class ServerBack extends Thread {
 		}
 	}
 
-	public void sendAll(String Message) {
+	public void sendAll(String message) {
 		// 모든 클라이언트들에게 메세지를 전송해줍니다.
 		for (ReceiveThread clientThread : clientThreadList) {
 			try {
-				clientThread.sendMessage(Message);
+				clientThread.sendMessage(message);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -71,13 +73,14 @@ public class ServerBack extends Thread {
 				in = new DataInputStream(socket.getInputStream()); // Input
 				out = new DataOutputStream(socket.getOutputStream()); // Output
 				nickName = in.readUTF();
+				System.out.println(nickName);
 				nickNameList.add(nickName);
+				System.out.println(nickNameList);
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
 			}
 		}
 
-		@Override
 		public void run() {
 			try {
 				// 새로운 유저 발생시 유저목록을 초기화한 후에 새롭게 유저목록을 입력해줍니다.
@@ -87,9 +90,35 @@ public class ServerBack extends Thread {
 					// !ResetUserList은 해당 값이 닉네임임을 알게해주는 명령어
 					sendAll("!ResetUserList" + nickName);
 				}
+				for (String roomName : roomNameList) {
+					sendAll("!ResetRoomList" + roomName);
+				}
 				while (true) {
 					message = in.readUTF();
-					sendAll(message);
+					if (message.contains("!CreateRoom")) {
+						String room = message.substring(11);
+						if (!roomMap.containsKey(room)) {
+							sendAll("[서버]: 채팅방 " + room + "이(가) 생성되었습니다.\n");
+							roomNameList.add(room);
+							// System.out.println(portNum + roomMap.size() + 1);
+							roomMap.put(room, new ServerBack(portNum + roomMap.size() + 1));
+							for (String roomName : roomNameList) {
+								sendAll("!ResetRoomList" + roomName);
+							}
+						} else {
+							sendAll("[서버]: 채팅방 " + room + "은(는) 이미 존재하는 채팅방입니다.\n");
+						}
+					} else if (message.contains("!RemoveRoom")) {
+						String room = message.substring(11);
+						sendAll("[서버]: 채팅방 " + room + "이(가) 제거되었습니다.\n");
+						roomNameList.remove(room);
+						roomMap.remove(room);
+						for (String roomName : roomNameList) {
+							sendAll("!ResetRoomList" + roomName);
+						}
+					} else {
+						sendAll(message);
+					}
 				}
 			} catch (Exception e) {
 				// 유저가 접속을 종료하면 여기서 오류가 발생합니다.
@@ -111,7 +140,10 @@ public class ServerBack extends Thread {
 			} catch (Exception e) {
 				e.getStackTrace();
 			}
-
 		}
+	}
+
+	public static void main(String[] args) {
+		new ServerBack(8080);
 	}
 }

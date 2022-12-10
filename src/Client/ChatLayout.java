@@ -23,6 +23,8 @@ public class ChatLayout extends JFrame {
     JList<String> RoomList;
     JTextArea UserList;
     private JButton ImageButton;
+    private JTextArea HelloArea;
+    private JPanel helloPanel;
     private ResultSet srs = null;
     PopupMenu pm = new PopupMenu();
     MenuItem pmItem1 = new MenuItem("Enter this chat room");
@@ -42,6 +44,7 @@ public class ChatLayout extends JFrame {
         ChatArea.setBorder(bb);
         RoomList.setBorder(bb);
         UserList.setBorder(bb);
+        HelloArea.append(nickName + "님 어서오세요!");
         ProfileCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

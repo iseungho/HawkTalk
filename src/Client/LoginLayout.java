@@ -1,4 +1,6 @@
-import Client.Login.JDBCconnector;
+package Client;
+
+import DB.JDBCconnector;
 import javax.swing.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
@@ -20,10 +22,9 @@ public class LoginLayout extends JFrame{
 
 
     public LoginLayout() {
-
         setContentPane(LoginPanel);
         setSize(400, 600);
-        setTitle("홍톡2.0");
+        setTitle("HawkTalk");
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -61,9 +62,9 @@ public class LoginLayout extends JFrame{
                     srs = stmt.executeQuery(sql);
                     if (srs.next()) {
                         if (srs.getString("Pwd").equals(pwd)) {
-                            JOptionPane.showMessageDialog(null,"로그인 성공!");
+                            // JOptionPane.showMessageDialog(null,"로그인 성공!");
                             dispose();
-                            new ChatLayout();
+                            new ChatLayout(srs.getString("NickName"), "localhost",8080);
                         } else {
                             JOptionPane.showMessageDialog(null,"비밀번호가 틀렸습니다");
                         }
@@ -86,9 +87,4 @@ public class LoginLayout extends JFrame{
             }
         });
     }
-
-    public static void main(String[] args) {
-        new LoginLayout();
-    }
-
 }

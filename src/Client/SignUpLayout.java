@@ -1,4 +1,6 @@
-import Client.Login.JDBCconnector;
+package Client;
+
+import DB.JDBCconnector;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -49,7 +51,7 @@ public class SignUpLayout extends JFrame{
                     flag = false;
                     JOptionPane.showMessageDialog(null,"비밀번호를 입력하세요");
                 }
-                else if(!PasswordField.equals(PasswordFieldOk)){
+                else if (!PasswordField.getText().equals(PasswordFieldOk.getText())){
                     flag = false;
                     JOptionPane.showMessageDialog(null,"비밀번호를 확인해주세요");
                 }

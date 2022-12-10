@@ -12,11 +12,7 @@ public class ProfileLayout extends JFrame{
         setTitle("프로필 수정");
         setResizable(false);
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-    }
-
-    public static void main(String[] args) {
-        new ProfileLayout();
     }
 }

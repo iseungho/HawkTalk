@@ -5,13 +5,13 @@ import java.util.*;
 
 public class JDBCconnector {
     protected Connection conn;
-    protected Statement stmt = null;
-    protected ResultSet srs = null;
+    public Statement stmt = null;
+    public ResultSet srs = null;
 
     public JDBCconnector() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/usersDB", "root", "admin");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/usersDB", "admin", "1234");
             System.out.println("DB 연결 성공");
             stmt = conn.createStatement(); // SQL문 처리용 Statement 객체 생성
             srs = stmt.executeQuery("select * from usertable;");
@@ -52,9 +52,5 @@ public class JDBCconnector {
         if (stmt.executeQuery(sql).next()) return 3;
 
         return 0;
-    }
-
-    public static void main(String[] args) {
-        new JDBCconnector();
     }
 }

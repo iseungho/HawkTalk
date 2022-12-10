@@ -15,6 +15,8 @@ public class ClientWaitingRoom extends JFrame {
     JTextField chatField = new JTextField(45);
     JButton sendBtn = new JButton("전송");
 
+    JButton profileBtn = new JButton("회원 정보 수정");
+
     JLabel roomLabel = new JLabel("채팅방 목록");
     DefaultListModel<String> roomModel;
     JList<String> roomList;
@@ -103,6 +105,14 @@ public class ClientWaitingRoom extends JFrame {
         clientPanel.add(roomPanel);
         clientPanel.add(chatField);
         clientPanel.add(sendBtn);
+        profileBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ProfileRoom profileRoom = new ProfileRoom(nickName);
+                profileRoom.setClientBack(clientBack);
+            }
+        });
+        clientPanel.add(profileBtn);
 
         pm.add(pmItem1);
         pmItem1.addActionListener(new ActionListener() {

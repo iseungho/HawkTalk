@@ -4,9 +4,9 @@ import java.sql.*;
 import java.util.*;
 
 public class JDBCconnector {
-    protected Connection conn;
-    protected Statement stmt = null;
-    protected ResultSet srs = null;
+    public Connection conn;
+    public Statement stmt = null;
+    public ResultSet srs = null;
 
     public JDBCconnector() {
         try {

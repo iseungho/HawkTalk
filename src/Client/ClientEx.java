@@ -1,9 +1,7 @@
 package Client;
-
-import Client.Login.Signin;
-
 public class ClientEx  {
+	private static final int portNum = 8080;
 	public static void main(String args[]) {
-		new Signin();
+		new LoginLayout(portNum);
 	}
 }

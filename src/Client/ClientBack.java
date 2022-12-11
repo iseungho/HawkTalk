@@ -1,5 +1,6 @@
 package Client;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -7,14 +8,15 @@ import java.util.*;
 public class ClientBack extends Thread {
 	private String nickName, roomName, ipAddress, message;
 	private int portNum;
-	private ClientWaitingRoom clientWaitingRoom;
+	private ChatLayout chatLayout;
+	DefaultListModel<String> roomModel;
+	JList<String> roomList;
 	private Socket socket;
 	private DataInputStream in;
 	private DataOutputStream out;
 
 	ArrayList<String> nickNameList = new ArrayList<>(); // 유저목록을 저장합니다.
 	ArrayList<String> roomNameList = new ArrayList<>();
-	HashMap<String, ArrayList<String>> roomMap = new HashMap<>();
 
 	public String getNickName() {
 		return nickName;
@@ -24,9 +26,9 @@ public class ClientBack extends Thread {
 		this.nickName = nickName;
 	}
 
-	public void setGui(ClientWaitingRoom clientWaitingRoom) {
+	public void setGui(ChatLayout chatLayout) {
 		// 실행했던 ClientGUI 그 자체의 정보를 들고옵니다.
-		this.clientWaitingRoom = clientWaitingRoom;
+		this.chatLayout = chatLayout;
 	}
 
 	public void setUserInfo(String nickName, String ipAddress, int portNum) {
@@ -49,15 +51,15 @@ public class ClientBack extends Thread {
 				message = in.readUTF();
 				if (message.contains("!ResetUserList")) {
 					// !ResetUserList이라는 수식어가 붙어있을 경우엔 닉네임으로 간주합니다.
-					clientWaitingRoom.userListArea.setText(null);
+					chatLayout.UserList.setText(null);
 					nickNameList.add(message.substring(14));
-					clientWaitingRoom.resetUserListArea(nickNameList);
+					chatLayout.resetUserListArea(nickNameList);
 				} else if (message.contains("!ResetRoomList")) {
 					// clientWaitingRoom.roomModel.clear();
-					clientWaitingRoom.roomModel.removeAllElements();
-					clientWaitingRoom.roomList.removeAll();
+					chatLayout.roomModel.removeAllElements();
+					chatLayout.RoomList.removeAll();
 					roomNameList.add(message.substring(14));
-					clientWaitingRoom.resetRoomList(roomNameList);
+					chatLayout.resetRoomList(roomNameList);
 				} else if (message.contains("!RemoveRoom")) {
 					roomNameList.clear();
 				} else if (message.contains("님이 입장하셨습니다.") || message.contains("님이 퇴장하셨습니다.")) {
@@ -65,15 +67,15 @@ public class ClientBack extends Thread {
 					nickNameList.clear();
 					roomNameList.clear();
 					// clientWaitingRoom.userListArea.setText(null);
-					clientWaitingRoom.appendMessage(message);
+					chatLayout.appendMessage(message);
 				} else if (message.contains("이(가) 생성되었습니다.")) {
 					// ~~ 님이 퇴장하셨습니다. 라는 식별자를 받으면 기존의 닉네임 리스트 초기화 후 새로 입력시킵니다.
 					roomNameList.clear();
 					// clientWaitingRoom.userListArea.setText(null);
-					clientWaitingRoom.appendMessage(message);
+					chatLayout.appendMessage(message);
 				} else {
 					// 위 모든 값이 아닐 시엔 일반 메세지로 간주합니다.
-					clientWaitingRoom.appendMessage(message);
+					chatLayout.appendMessage(message);
 				}
 			}
 		} catch (Exception e) {

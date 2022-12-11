@@ -122,15 +122,6 @@ public class ServerBack extends Thread {
 						} else {
 							sendAll("[서버]: 채팅방 " + room + "이(가) 제거되지 않았습니다.\n");
 						}
-					} else if (message.contains("!EditUserNickName")) {
-						String oldNickName = message.substring(17).split(":")[0];
-						nickNameList.remove(oldNickName);
-						nickName = message.substring(17).split(":")[1];
-						nickNameList.add(nickName);
-						sendAll("[서버]: " + nickName + "님이 입장하셨습니다.\n");
-						for (String nickName : nickNameList) {
-							sendAll("!ResetUserList" + nickName);
-						}
 					} else {
 						sendAll(message);
 					}
@@ -156,9 +147,5 @@ public class ServerBack extends Thread {
 				e.getStackTrace();
 			}
 		}
-	}
-
-	public static void main(String[] args) {
-		new ServerBack(8080);
 	}
 }

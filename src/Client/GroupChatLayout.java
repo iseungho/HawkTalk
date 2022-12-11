@@ -1,8 +1,7 @@
 package Client;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class GroupChatLayout extends JFrame{
@@ -24,6 +23,7 @@ public class GroupChatLayout extends JFrame{
     private JPanel DrawField;
     JTextArea UserList;
     private JTextArea ChatTextArea;
+    private JLabel Label;
     GroupChatBack groupChatBack = new GroupChatBack();
 
 
@@ -59,6 +59,24 @@ public class GroupChatLayout extends JFrame{
         groupChatBack.setGui(this);
         groupChatBack.setUserInfo(nickName, roomName, ipAddress, portNum);
         groupChatBack.start(); // 채팅창이 켜짐과 동시에 접속을 실행해줍니다.
+        ChatField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                if (ChatField.getText().equals("채팅을 입력하세요")) {
+                    ChatField.setText("");
+                }
+            }
+        });
+        ChatField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                if (ChatField.getText().equals("채팅을 입력하세요")) {
+                    ChatField.setText("");
+                }
+            }
+        });
     }
 
     public void appendMessage(String Message) {

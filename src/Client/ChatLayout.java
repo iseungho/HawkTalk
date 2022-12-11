@@ -22,6 +22,7 @@ public class ChatLayout extends JFrame {
     private JButton ImageButton;
     JTextArea HelloArea;
     private JPanel helloPanel;
+    private JLabel Label;
     private ResultSet srs = null;
     PopupMenu pm = new PopupMenu();
     MenuItem pmItem1 = new MenuItem("Enter room");
@@ -114,7 +115,9 @@ public class ChatLayout extends JFrame {
                 if (RoomList.getSelectedValue() != null) {
                     new GroupChatLayout(nickName, RoomList.getSelectedValue(), ipAddress, portNum + RoomList.getSelectedIndex() + 1);
                 } else {
-                    System.out.println("Please, Click and Select");
+                    JOptionPane.showMessageDialog(null,"선택후 우클릭 해주세요");
+
+
                 }
             }
         });
@@ -126,7 +129,8 @@ public class ChatLayout extends JFrame {
                 if (RoomList.getSelectedValue() != null) {
                     clientBack.sendMessage("!RemoveRoom" + RoomList.getSelectedValue());
                 } else {
-                    System.out.println("Please, Click and Select");
+                    JOptionPane.showMessageDialog(null,"선택후 우클릭 해주세요");
+
                 }
             }
         });

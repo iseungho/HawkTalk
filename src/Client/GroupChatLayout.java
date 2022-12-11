@@ -16,7 +16,6 @@ public class GroupChatLayout extends JFrame{
     int portNum;
     private JPanel GroupChatPanel;
     private JTextField ChatField;
-    private JButton ImageButton;
     private JButton SendButton;
     private JButton DeleteButton;
     private JButton EraserButton;
@@ -28,6 +27,7 @@ public class GroupChatLayout extends JFrame{
     JTextArea UserList;
     private JTextArea ChatTextArea;
     private JLabel Label;
+    private JButton WeatherButton;
     GroupChatBack groupChatBack = new GroupChatBack();
     BufferedImage imgBuff;
     Brush brush;
@@ -136,6 +136,12 @@ public class GroupChatLayout extends JFrame{
                 } else if ((Integer) LineSpinner.getValue() > 50) {
                     LineSpinner.setValue(50);
                 }
+            }
+        });
+        WeatherButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new WeatherLayout();
             }
         });
     }

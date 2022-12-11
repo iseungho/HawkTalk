@@ -154,16 +154,6 @@
           <text value=""/>
         </properties>
       </component>
-      <component id="eec66" class="javax.swing.JButton" binding="ImageButton">
-        <constraints>
-          <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <background color="-1"/>
-          <icon value="icons/Image.png"/>
-          <text value=""/>
-        </properties>
-      </component>
       <component id="4266d" class="javax.swing.JButton" binding="SendButton">
         <constraints>
           <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
@@ -252,6 +242,19 @@
         <properties>
           <font name="Han Santteut Dotum" size="12"/>
           <text value="접속중인 유저"/>
+        </properties>
+      </component>
+      <component id="3d6b8" class="javax.swing.JButton" binding="WeatherButton">
+        <constraints>
+          <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+          <enabled value="true"/>
+          <foreground color="-1"/>
+          <horizontalTextPosition value="11"/>
+          <icon value="icons/맑음.png"/>
+          <text value=""/>
         </properties>
       </component>
     </children>

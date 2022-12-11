@@ -19,10 +19,10 @@ public class ChatLayout extends JFrame {
     DefaultListModel<String> roomModel;
     JList<String> RoomList;
     JTextArea UserList;
-    private JButton ImageButton;
     JTextArea HelloArea;
     private JPanel helloPanel;
     private JLabel Label;
+    private JButton WeatherButton;
     private ResultSet srs = null;
     PopupMenu pm = new PopupMenu();
     MenuItem pmItem1 = new MenuItem("Enter room");
@@ -153,6 +153,12 @@ public class ChatLayout extends JFrame {
                 if (ChatField.getText().equals("채팅을 입력하세요")) {
                     ChatField.setText("");
                 }
+            }
+        });
+        WeatherButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new WeatherLayout();
             }
         });
     }

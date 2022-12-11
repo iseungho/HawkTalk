@@ -3,10 +3,7 @@ package Client;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -134,6 +131,26 @@ public class ChatLayout extends JFrame {
             }
         });
         this.add(pm);
+        ChatField.addMouseListener(new MouseAdapter() {
+        });
+        ChatField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                if (ChatField.getText().equals("채팅을 입력하세요")) {
+                    ChatField.setText("");
+                }
+            }
+        });
+        ChatField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                if (ChatField.getText().equals("채팅을 입력하세요")) {
+                    ChatField.setText("");
+                }
+            }
+        });
     }
     public void appendMessage(String Message) {
         ChatArea.append(Message);

@@ -42,9 +42,10 @@ public class GroupChatLayout extends JFrame{
         this.nickName = nickName;
         this.portNum = portNum;
         setContentPane(GroupChatPanel);
-        setSize(1200, 700);
+        setSize(1280, 720);
         setTitle(roomName);
         setVisible(true);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         SendButton.addActionListener(new ActionListener() {

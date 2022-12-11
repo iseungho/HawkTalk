@@ -67,15 +67,18 @@ public class ServerBack extends Thread {
 		private DataInputStream in;
 		private DataOutputStream out;
 		String nickName, message;
+		boolean isOverlap = false;
 
 		public ReceiveThread(Socket socket) {
 			try {
 				in = new DataInputStream(socket.getInputStream()); // Input
 				out = new DataOutputStream(socket.getOutputStream()); // Output
 				nickName = in.readUTF();
-				System.out.println(nickName);
-				nickNameList.add(nickName);
-				System.out.println(nickNameList);
+				if (nickNameList.contains(nickName)) {
+					isOverlap = !isOverlap;
+				} else {
+					nickNameList.add(nickName);
+				}
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
 			}
@@ -85,46 +88,52 @@ public class ServerBack extends Thread {
 			try {
 				// 새로운 유저 발생시 유저목록을 초기화한 후에 새롭게 유저목록을 입력해줍니다.
 				// 또한, 새로운 유저가 입장했음을 모든 클라이언트에게 전송합니다.
-				sendAll("[서버]: " + nickName + "님이 입장하셨습니다.\n");
-				for (String nickName : nickNameList) {
-					// !ResetUserList은 해당 값이 닉네임임을 알게해주는 명령어
-					sendAll("!ResetUserList" + nickName);
-				}
-				for (String roomName : roomNameList) {
-					sendAll("!ResetRoomList" + roomName);
-				}
-				while (true) {
-					message = in.readUTF();
-					if (message.contains("!CreateRoom")) {
-						String room = message.substring(11);
-						if (!roomMap.containsKey(room)) {
-							sendAll("[서버]: 채팅방 " + room + "이(가) 생성되었습니다.\n");
-							roomNameList.add(room);
-							System.out.println(roomNameList);
-							// System.out.println(portNum + roomMap.size() + 1);
-							roomMap.put(room, new ServerBack(portNum + roomMap.size() + 1));
-							for (String roomName : roomNameList) {
-								sendAll("!ResetRoomList" + roomName);
-							}
-						} else {
-							sendAll("[서버]: 채팅방 " + room + "은(는) 이미 존재하는 채팅방입니다.\n");
-						}
-					} else if (message.contains("!RemoveRoom")) {
-						String room = message.substring(11);
-						if (roomMap.get(room).nickNameList.size() == 0) {
-							sendAll("[서버]: 채팅방 " + room + "이(가) 제거되었습니다.\n");
-							roomNameList.remove(room);
-							sendAll("!RemoveRoom");
-							roomMap.remove(room);
-							for (String roomName : roomNameList) {
-								sendAll("!ResetRoomList" + roomName);
-							}
-						} else {
-							sendAll("[서버]: 채팅방 " + room + "이(가) 제거되지 않았습니다.\n");
-						}
-					} else {
-						sendAll(message);
+				if (!isOverlap) {
+					sendAll("[서버]: " + nickName + "님이 입장하셨습니다.\n");
+					for (String nickName : nickNameList) {
+						// !ResetUserList은 해당 값이 닉네임임을 알게해주는 명령어
+						sendAll("!ResetUserList" + nickName);
 					}
+					for (String roomName : roomNameList) {
+						sendAll("!ResetRoomList" + roomName);
+					}
+					while (true) {
+						message = in.readUTF();
+						if (message.contains("!CreateRoom")) {
+							String room = message.substring(11);
+							if (!roomMap.containsKey(room)) {
+								sendAll("[서버]: 채팅방 " + room + "이(가) 생성되었습니다.\n");
+								roomNameList.add(room);
+								System.out.println(roomNameList);
+								// System.out.println(portNum + roomMap.size() + 1);
+								roomMap.put(room, new ServerBack(portNum + roomMap.size() + 1));
+								for (String roomName : roomNameList) {
+									sendAll("!ResetRoomList" + roomName);
+								}
+							} else {
+								sendAll("[서버]: 채팅방 " + room + "은(는) 이미 존재하는 채팅방입니다.\n");
+							}
+						} else if (message.contains("!RemoveRoom")) {
+							String room = message.substring(11);
+							if (roomMap.get(room).nickNameList.size() == 0) {
+								sendAll("[서버]: 채팅방 " + room + "이(가) 제거되었습니다.\n");
+								roomNameList.remove(room);
+								sendAll("!RemoveRoom");
+								roomMap.remove(room);
+								for (String roomName : roomNameList) {
+									sendAll("!ResetRoomList" + roomName);
+								}
+							} else {
+								sendAll("[서버]: 채팅방 " + room + "이(가) 제거되지 않았습니다.\n");
+							}
+						} else {
+							sendAll(message);
+						}
+					}
+				} else {
+					sendAll("!Overlap" + nickName);
+					sendAll("[서버]: " + nickName + "님의 중복 접속으로 인해 종료되었습니다.\n");
+					isOverlap = !isOverlap;
 				}
 			} catch (Exception e) {
 				// 유저가 접속을 종료하면 여기서 오류가 발생합니다.

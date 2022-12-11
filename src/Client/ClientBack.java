@@ -62,6 +62,12 @@ public class ClientBack extends Thread {
 					chatLayout.resetRoomList(roomNameList);
 				} else if (message.contains("!RemoveRoom")) {
 					roomNameList.clear();
+				} else if (message.contains("!Overlap")) {
+					String str = message.substring(8);
+					if (chatLayout.nickName.equals(str)) {
+						JOptionPane.showMessageDialog(null,"중복 로그인으로 인해 시스템이 종료됩니다");
+						System.exit(0);
+					}
 				} else if (message.contains("님이 입장하셨습니다.") || message.contains("님이 퇴장하셨습니다.")) {
 					// ~~ 님이 입장하셨습니다. 라는 식별자를 받으면 기존의 닉네임 리스트 초기화 후 새로 입력시킵니다.
 					nickNameList.clear();

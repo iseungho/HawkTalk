@@ -13,6 +13,7 @@ public class ProfileLayout extends JFrame{
 
     private JButton WithdrawalButton;
     private JPanel ProfilePanel;
+    private JButton LogoutButton;
     private ClientBack clientBack;
     public void setClientBack(ClientBack clientBack) {
         this.clientBack = clientBack;
@@ -45,6 +46,16 @@ public class ProfileLayout extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 new WithdrawalLayout(clientBack.getNickName());
+            }
+        });
+        LogoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Integer yesorno = null;
+                yesorno = JOptionPane.showConfirmDialog(null, "정말 로그아웃 하시겠습니까?", "로그아웃", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if(yesorno == 0){
+                    System.exit(0);
+                }
             }
         });
     }

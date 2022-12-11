@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Client.ProfileLayout">
-  <grid id="27dc6" binding="ProfilePanel" layout-manager="GridLayoutManager" row-count="8" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="ProfilePanel" layout-manager="GridLayoutManager" row-count="9" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="500" height="435"/>
     </constraints>
     <properties>
       <background color="-7227943"/>
@@ -32,12 +32,12 @@
       </hspacer>
       <vspacer id="70c96">
         <constraints>
-          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <vspacer id="394a0">
         <constraints>
-          <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <vspacer id="bea61">
@@ -96,20 +96,31 @@
               <text value="비밀번호 변경"/>
             </properties>
           </component>
-          <component id="4591f" class="javax.swing.JButton" binding="WithdrawalButton">
+          <component id="8fbe5" class="javax.swing.JButton" binding="LogoutButton">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <background color="-1"/>
               <font name="Han Santteut Dotum" size="14"/>
-              <foreground color="-65536"/>
-              <text value="회원 탈퇴"/>
+              <foreground color="-16777216"/>
+              <text value="로그아웃"/>
             </properties>
           </component>
         </children>
       </grid>
-      <vspacer id="d0d2f">
+      <component id="4591f" class="javax.swing.JButton" binding="WithdrawalButton">
+        <constraints>
+          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+          <font name="Han Santteut Dotum" size="14"/>
+          <foreground color="-65536"/>
+          <text value="회원 탈퇴"/>
+        </properties>
+      </component>
+      <vspacer id="36d5d">
         <constraints>
           <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>

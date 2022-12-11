@@ -1,11 +1,13 @@
 package Client;
 
+import DrawBoard.Brush;
+import DrawBoard.ColorChooser;
+
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -18,20 +20,23 @@ public class GroupChatLayout extends JFrame{
     private JButton SendButton;
     private JButton DeleteButton;
     private JButton EraserButton;
-    private JButton CircleButton;
     private JButton ColorButton;
-    private JButton StraightButton;
     private JButton DrawButton;
     private JSpinner LineSpinner;
-    private JButton SquareButton;
     private JTextPane ChatTextPane;
     private JPanel DrawPanel;
     JTextArea UserList;
     private JTextArea ChatTextArea;
+    private JLabel Label;
     GroupChatBack groupChatBack = new GroupChatBack();
     BufferedImage imgBuff;
     Brush brush;
+    ColorChooser colorChooser;
+    Color tmp = Color.BLACK;
 
+    public GroupChatBack getGroupChatBack() {
+        return groupChatBack;
+    }
 
     public GroupChatLayout(String nickName, String roomName, String ipAddress, int portNum) {
         this.nickName = nickName;
@@ -69,11 +74,9 @@ public class GroupChatLayout extends JFrame{
         imgBuff = new BufferedImage(DrawPanel.getWidth(), DrawPanel.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
         JLabel drawLabel = new JLabel(new ImageIcon(imgBuff));
-        // drawLabel.setBounds(DrawPanel.getX(), DrawPanel.getY(), DrawPanel.getWidth(), DrawPanel.getHeight());
         drawLabel.setSize(DrawPanel.getSize());
 
         brush = new Brush();
-        // brush.setBounds(DrawPanel.getX(), DrawPanel.getY(), DrawPanel.getWidth(), DrawPanel.getHeight());
         brush.getSize(DrawPanel.getSize());
 
         DrawPanel.add(drawLabel);
@@ -81,7 +84,7 @@ public class GroupChatLayout extends JFrame{
 
         drawLabel.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
-            public void mouseDragged(MouseEvent e) {
+            public synchronized void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
                 brush.setX(e.getX());
                 brush.setY(e.getY());
@@ -90,11 +93,53 @@ public class GroupChatLayout extends JFrame{
                 brush.printAll(imgBuff.getGraphics());
             }
         });
+        ColorButton.addActionListener(new ActionListener() {
+            @Override
+            public synchronized void actionPerformed(ActionEvent e) {
+                colorChooser = new ColorChooser();
+                colorChooser.setGroupChatLayout(GroupChatLayout.this);
+            }
+        });
+        DrawButton.addActionListener(new ActionListener() {
+            @Override
+            public synchronized void actionPerformed(ActionEvent e) {
+                brush.setColor(tmp);
+            }
+        });
+        EraserButton.addActionListener(new ActionListener() {
+            @Override
+            public synchronized void actionPerformed(ActionEvent e) {
+                tmp = brush.getColor();
+                brush.setColor(Color.WHITE);
+            }
+        });
+        DeleteButton.addActionListener(new ActionListener() {
+            @Override
+            public synchronized void actionPerformed(ActionEvent e) {
+                tmp = brush.getColor();
+                brush.setClear(true);
+                groupChatBack.sendMessage("!Drawing0:0");
+                brush.setColor(tmp);
+            }
+        });
 
         groupChatBack.setGui(this);
         groupChatBack.setUserInfo(nickName, roomName, ipAddress, portNum);
         groupChatBack.start(); // 채팅창이 켜짐과 동시에 접속을 실행해줍니다.
+        LineSpinner.setValue(10);
+        LineSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public synchronized void stateChanged(ChangeEvent e) {
+                brush.setSize((Integer) LineSpinner.getValue());
+                if ((Integer) LineSpinner.getValue() < 1) {
+                    LineSpinner.setValue(1);
+                } else if ((Integer) LineSpinner.getValue() > 50) {
+                    LineSpinner.setValue(50);
+                }
+            }
+        });
     }
+
 
     public void appendMessage(String Message) {
         ChatTextArea.append(Message);

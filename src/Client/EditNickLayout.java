@@ -50,14 +50,19 @@ public class EditNickLayout extends JFrame{
                     srs = stmt.executeQuery(sql);
                     srs.next();
                     String name = srs.getString("Name");
-                    sb = new StringBuilder();
-                    sb.append("update usertable set NickName='").append(NickTextField.getText()).append("' WHERE Name='").append(name).append("';");
-                    sql = sb.toString();
-                    stmt.executeUpdate(sql);
-                    JOptionPane.showMessageDialog(null,"닉네임 변경 성공");
-                    clientBack.resetNickName(NickTextField.getText());
-                    JOptionPane.showMessageDialog(null,"재접속 해주세요");
-                    System.exit(0);
+                    srs = stmt.executeQuery("select * from usertable where NickName='" + NickTextField.getText() + "';");
+                    if (!srs.next()) {
+                        sb = new StringBuilder();
+                        sb.append("update usertable set NickName='").append(NickTextField.getText()).append("' WHERE Name='").append(name).append("';");
+                        sql = sb.toString();
+                        stmt.executeUpdate(sql);
+                        JOptionPane.showMessageDialog(null,"닉네임 변경 성공");
+                        clientBack.resetNickName(NickTextField.getText());
+                        JOptionPane.showMessageDialog(null,"재접속 해주세요");
+                        System.exit(0);
+                    } else {
+                        JOptionPane.showMessageDialog(null," 이미 존재하는 닉네임입니다");
+                    }
                 } catch (SQLException se) {
                         se.printStackTrace();
                 }

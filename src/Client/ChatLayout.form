@@ -84,7 +84,7 @@
                 </constraints>
                 <properties>
                   <background color="-1"/>
-                  <font name="Han Santteut Dotum" size="14" style="0"/>
+                  <font name="Han Santteut Dotum" size="16" style="0"/>
                 </properties>
               </component>
             </children>

@@ -23,7 +23,7 @@ public class ChatLayout extends JFrame {
     JList<String> RoomList;
     JTextArea UserList;
     private JButton ImageButton;
-    private JTextArea HelloArea;
+    JTextArea HelloArea;
     private JPanel helloPanel;
     private ResultSet srs = null;
     PopupMenu pm = new PopupMenu();
@@ -32,6 +32,14 @@ public class ChatLayout extends JFrame {
 
     //파라미터: 색상, 선 두께, border의 모서리를 둥글게 할 것인지
     private LineBorder bb = new LineBorder(Color.black, 1, false);
+
+    public String getNickName() {
+        return this.nickName;
+    }
+
+    public void resetNickName(String newNickName) {
+        this.nickName = newNickName;
+    }
 
     public ChatLayout(String nickName, String ipAddress, int portNum){
         this.nickName = nickName;
@@ -48,7 +56,7 @@ public class ChatLayout extends JFrame {
         ProfileCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ProfileLayout profileLayout = new ProfileLayout(nickName);
+                ProfileLayout profileLayout = new ProfileLayout(clientBack.getNickName());
                 profileLayout.setClientBack(clientBack);
 
             }

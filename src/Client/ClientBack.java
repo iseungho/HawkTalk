@@ -17,7 +17,6 @@ public class ClientBack extends Thread {
 
 	ArrayList<String> nickNameList = new ArrayList<>(); // 유저목록을 저장합니다.
 	ArrayList<String> roomNameList = new ArrayList<>();
-	HashMap<String, ArrayList<String>> roomMap = new HashMap<>();
 
 	public String getNickName() {
 		return nickName;
@@ -26,6 +25,7 @@ public class ClientBack extends Thread {
 	public void resetNickName(String nickName) {
 		this.nickName = nickName;
 	}
+
 	public void setGui(ChatLayout chatLayout) {
 		// 실행했던 ClientGUI 그 자체의 정보를 들고옵니다.
 		this.chatLayout = chatLayout;

@@ -18,10 +18,11 @@ public class LoginLayout extends JFrame{
     private StringBuilder sb;
     private String sql;
     private ResultSet srs = null;
+    private int portNum;
 
 
-
-    public LoginLayout() {
+    public LoginLayout(int portNum) {
+        this.portNum = portNum;
         setContentPane(LoginPanel);
         setSize(400, 600);
         setTitle("HawkTalk");
@@ -64,7 +65,7 @@ public class LoginLayout extends JFrame{
                         if (srs.getString("Pwd").equals(pwd)) {
                             // JOptionPane.showMessageDialog(null,"로그인 성공!");
                             dispose();
-                            new ChatLayout(srs.getString("NickName"), "localhost",8080);
+                            new ChatLayout(srs.getString("NickName"), "localhost",portNum);
                         } else {
                             JOptionPane.showMessageDialog(null,"비밀번호가 틀렸습니다");
                         }

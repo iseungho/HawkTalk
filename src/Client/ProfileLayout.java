@@ -18,7 +18,6 @@ public class ProfileLayout extends JFrame{
         this.clientBack = clientBack;
     }
 
-
     public ProfileLayout(String nickName){
         this.nickName = nickName;
         cmd = "!EditUserNickName" + nickName + ":" + nickName;
@@ -32,10 +31,9 @@ public class ProfileLayout extends JFrame{
         ChangeNickButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                EditNickLayout editNickLayout = new EditNickLayout(nickName);
+                EditNickLayout editNickLayout = new EditNickLayout(clientBack.getNickName());
                 editNickLayout.setClientBack(clientBack);
             }
-
         });
         ChangePassButton.addActionListener(new ActionListener() {
             @Override

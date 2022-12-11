@@ -1,7 +1,12 @@
 package Client;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class GroupChatLayout extends JFrame{
@@ -20,11 +25,12 @@ public class GroupChatLayout extends JFrame{
     private JSpinner LineSpinner;
     private JButton SquareButton;
     private JTextPane ChatTextPane;
-    private JPanel DrawField;
+    private JPanel DrawPanel;
     JTextArea UserList;
     private JTextArea ChatTextArea;
-    private JLabel Label;
     GroupChatBack groupChatBack = new GroupChatBack();
+    BufferedImage imgBuff;
+    Brush brush;
 
 
     public GroupChatLayout(String nickName, String roomName, String ipAddress, int portNum) {
@@ -56,27 +62,38 @@ public class GroupChatLayout extends JFrame{
                 }
             }
         });
+
+        DrawPanel.setBackground(Color.WHITE);
+        DrawPanel.setOpaque(true);
+
+        imgBuff = new BufferedImage(DrawPanel.getWidth(), DrawPanel.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+        JLabel drawLabel = new JLabel(new ImageIcon(imgBuff));
+        // drawLabel.setBounds(DrawPanel.getX(), DrawPanel.getY(), DrawPanel.getWidth(), DrawPanel.getHeight());
+        drawLabel.setSize(DrawPanel.getSize());
+
+        brush = new Brush();
+        // brush.setBounds(DrawPanel.getX(), DrawPanel.getY(), DrawPanel.getWidth(), DrawPanel.getHeight());
+        brush.getSize(DrawPanel.getSize());
+
+        DrawPanel.add(drawLabel);
+        DrawPanel.add(brush);
+
+        drawLabel.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+                brush.setX(e.getX());
+                brush.setY(e.getY());
+                groupChatBack.sendMessage("!Drawing" + brush.x + ":" + brush.y);
+                brush.repaint();
+                brush.printAll(imgBuff.getGraphics());
+            }
+        });
+
         groupChatBack.setGui(this);
         groupChatBack.setUserInfo(nickName, roomName, ipAddress, portNum);
         groupChatBack.start(); // 채팅창이 켜짐과 동시에 접속을 실행해줍니다.
-        ChatField.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                super.mousePressed(e);
-                if (ChatField.getText().equals("채팅을 입력하세요")) {
-                    ChatField.setText("");
-                }
-            }
-        });
-        ChatField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-                if (ChatField.getText().equals("채팅을 입력하세요")) {
-                    ChatField.setText("");
-                }
-            }
-        });
     }
 
     public void appendMessage(String Message) {
@@ -88,5 +105,13 @@ public class GroupChatLayout extends JFrame{
         for (String nickName : nickNameList) {
             UserList.append(nickName + "\n");
         }
+    }
+
+    public synchronized Brush getBrush() {
+        return this.brush;
+    }
+
+    public synchronized void brushBuff() {
+        brush.printAll(imgBuff.getGraphics());
     }
 }

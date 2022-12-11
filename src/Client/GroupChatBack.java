@@ -61,6 +61,13 @@ public class GroupChatBack extends Thread {
                     nickNameList.clear();
                     // clientWaitingRoom.userListArea.setText(null);
                     groupChatLayout.appendMessage(message);
+                } else if (message.contains("!Drawing")) {
+                    Brush brush = groupChatLayout.getBrush();
+                    String position = message.substring(8);
+                    brush.setX(Integer.parseInt(position.split(":")[0]));
+                    brush.setY(Integer.parseInt(position.split(":")[1]));
+                    brush.repaint();
+                    groupChatLayout.brushBuff();
                 } else {
                     // 위 모든 값이 아닐 시엔 일반 메세지로 간주합니다.
                     groupChatLayout.appendMessage(message);

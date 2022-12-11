@@ -4,14 +4,14 @@ import java.sql.*;
 import java.util.*;
 
 public class JDBCconnector {
-    protected Connection conn;
+    public Connection conn;
     public Statement stmt = null;
     public ResultSet srs = null;
 
     public JDBCconnector() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/usersDB", "admin", "1234");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/usersDB", "root", "admin");
             System.out.println("DB 연결 성공");
             stmt = conn.createStatement(); // SQL문 처리용 Statement 객체 생성
             srs = stmt.executeQuery("select * from usertable;");
@@ -40,7 +40,8 @@ public class JDBCconnector {
     public int isValid(Statement stmt, List<String> userData) throws SQLException {
         // srs = stmt.executeQuery("select * from usertable"); // 테이블의 모든 데이터 검색
         sb = new StringBuilder();
-        sql = sb.append("select * from usertable where Name='").append(userData.get(0)).append("' AND ClassNumber='").append(userData.get(1)).append("';").toString();
+        sql = sb.append("select * from usertable where Name='").append(userData.get(0))
+                .append("' AND ClassNumber='").append(userData.get(1).toUpperCase()).append("';").toString();
         if (stmt.executeQuery(sql).next()) return 1;
 
         sb = new StringBuilder();

@@ -6,7 +6,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class ChattingRoomBack extends Thread {
+public class GroupChatBack extends Thread {
     private String nickName, roomName, message, ipAddress;
     private int portNum;
     private Socket socket;

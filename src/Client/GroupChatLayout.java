@@ -24,7 +24,7 @@ public class GroupChatLayout extends JFrame{
     private JPanel DrawField;
     JTextArea UserList;
     private JTextArea ChatTextArea;
-    ChattingRoomBack chattingRoomBack = new ChattingRoomBack();
+    GroupChatBack groupChatBack = new GroupChatBack();
 
 
     public GroupChatLayout(String nickName, String roomName, String ipAddress, int portNum) {
@@ -41,7 +41,7 @@ public class GroupChatLayout extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 String Message = ChatField.getText().trim();
                 if (Message.length() > 0) {
-                    chattingRoomBack.sendMessage("[" + nickName + "]: " + Message + "\n");
+                    groupChatBack.sendMessage("[" + nickName + "]: " + Message + "\n");
                     ChatField.setText(null);
                 }
             }
@@ -51,14 +51,14 @@ public class GroupChatLayout extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 String Message = ChatField.getText().trim();
                 if (Message.length() > 0) {
-                    chattingRoomBack.sendMessage("[" + nickName + "]: " + Message + "\n");
+                    groupChatBack.sendMessage("[" + nickName + "]: " + Message + "\n");
                     ChatField.setText(null);
                 }
             }
         });
-        chattingRoomBack.setGui(this);
-        chattingRoomBack.setUserInfo(nickName, roomName, ipAddress, portNum);
-        chattingRoomBack.start(); // 채팅창이 켜짐과 동시에 접속을 실행해줍니다.
+        groupChatBack.setGui(this);
+        groupChatBack.setUserInfo(nickName, roomName, ipAddress, portNum);
+        groupChatBack.start(); // 채팅창이 켜짐과 동시에 접속을 실행해줍니다.
     }
 
     public void appendMessage(String Message) {

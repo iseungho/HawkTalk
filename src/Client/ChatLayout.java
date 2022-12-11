@@ -48,7 +48,9 @@ public class ChatLayout extends JFrame {
         ProfileCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ProfileLayout();
+                ProfileLayout profileLayout = new ProfileLayout(nickName);
+                profileLayout.setClientBack(clientBack);
+
             }
         });
         ChatField.addActionListener(new ActionListener() {

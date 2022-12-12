@@ -71,11 +71,23 @@ public class GroupChatBack extends Thread {
                     brush.setY(Integer.parseInt(position.split(":")[1]));
                     brush.repaint();
                     groupChatLayout.brushBuff();
+                } else if (message.contains("!SetClear")) {
+                    Brush brush = groupChatLayout.getBrush();
+                    brush.setClear(true);
+                    brush.setX(0);
+                    brush.setY(0);
+                    brush.repaint();
+                    groupChatLayout.brushBuff();
                 } else if (message.contains("!ColorChanged")) {
                     Brush brush = groupChatLayout.getBrush();
                     String str = message.substring(13);
                     Color color = new Color(Integer.parseInt(str));
                     brush.setColor(color);
+                } else if (message.contains("!ThickChanged")) {
+                    Brush brush = groupChatLayout.getBrush();
+                    String thick = message.substring(13);
+                    int size = Integer.parseInt(thick);
+                    brush.setSize(size);
                 } else {
                     // 위 모든 값이 아닐 시엔 일반 메세지로 간주합니다.
                     groupChatLayout.appendMessage(message);

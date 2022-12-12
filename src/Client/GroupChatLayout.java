@@ -32,7 +32,7 @@ public class GroupChatLayout extends JFrame{
     BufferedImage imgBuff;
     Brush brush;
     ColorChooser colorChooser;
-    Color tmp = Color.BLACK;
+    Color tmpColor = Color.BLACK;
 
     public GroupChatBack getGroupChatBack() {
         return groupChatBack;
@@ -104,23 +104,22 @@ public class GroupChatLayout extends JFrame{
         DrawButton.addActionListener(new ActionListener() {
             @Override
             public synchronized void actionPerformed(ActionEvent e) {
-                brush.setColor(tmp);
+                groupChatBack.sendMessage("!ColorChanged" + tmpColor.getRGB());
             }
         });
         EraserButton.addActionListener(new ActionListener() {
             @Override
             public synchronized void actionPerformed(ActionEvent e) {
-                tmp = brush.getColor();
-                brush.setColor(Color.WHITE);
+                tmpColor = brush.getColor();
+                groupChatBack.sendMessage("!ColorChanged" + Color.WHITE.getRGB());
             }
         });
         DeleteButton.addActionListener(new ActionListener() {
             @Override
             public synchronized void actionPerformed(ActionEvent e) {
-                tmp = brush.getColor();
-                brush.setClear(true);
-                groupChatBack.sendMessage("!Drawing0:0");
-                brush.setColor(tmp);
+                tmpColor = brush.getColor();
+                groupChatBack.sendMessage("!SetClear");
+                brush.setColor(tmpColor);
             }
         });
 
@@ -132,6 +131,7 @@ public class GroupChatLayout extends JFrame{
             @Override
             public synchronized void stateChanged(ChangeEvent e) {
                 brush.setSize((Integer) LineSpinner.getValue());
+                groupChatBack.sendMessage("!ThickChanged" + (Integer) LineSpinner.getValue());
                 if ((Integer) LineSpinner.getValue() < 1) {
                     LineSpinner.setValue(1);
                 } else if ((Integer) LineSpinner.getValue() > 50) {

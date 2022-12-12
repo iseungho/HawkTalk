@@ -1,8 +1,7 @@
 <component name="libraryTable">
   <library name="mysql-connector-j-8.0.31">
     <CLASSES>
-      <root url="jar://C:/Program Files (x86)/MySQL/Connector J 8.0/mysql-connector-j-8.0.31.jar!/" />
-      <root url="jar://C:/Java/jsoup-1.15.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../../../../../../Program Files (x86)/MySQL/Connector J 8.0/mysql-connector-j-8.0.31.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

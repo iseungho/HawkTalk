@@ -81,9 +81,6 @@ public class ChatLayout extends JFrame {
         });
         roomModel = new DefaultListModel<>();
         RoomList.setModel(roomModel);
-        clientBack.setGui(this);
-        clientBack.setUserInfo(nickName, ipAddress, portNum);
-        clientBack.start(); // 채팅창이 켜짐과 동시에 접속을 실행해줍니다.
         NewRoomButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -98,10 +95,7 @@ public class ChatLayout extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
-                    String roomName = RoomList.getSelectedValue();
-                    // clientBack.sendMessage("[서버]: " + nickName + "님이 " + roomName + "에 입장하셨습니다.\n");
-                    // System.out.println(RoomList.getSelectedIndex());
-                    new GroupChatLayout(nickName, roomName, ipAddress, portNum + RoomList.getSelectedIndex() + 1);
+                    clientBack.sendMessage("!EnterRoom" + nickName + ":" + RoomList.getSelectedValue());
                 } else if (e.getButton() == MouseEvent.BUTTON3) {
                     // System.out.println(String.valueOf(e.getX()) + ", " + String.valueOf(e.getY()));
                     pm.show(RoomList, e.getX(), e.getY());
@@ -113,11 +107,9 @@ public class ChatLayout extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (RoomList.getSelectedValue() != null) {
-                    new GroupChatLayout(nickName, RoomList.getSelectedValue(), ipAddress, portNum + RoomList.getSelectedIndex() + 1);
+                    clientBack.sendMessage("!EnterRoom" + nickName + ":" + RoomList.getSelectedValue());
                 } else {
                     JOptionPane.showMessageDialog(null,"선택후 우클릭 해주세요");
-
-
                 }
             }
         });
@@ -161,6 +153,9 @@ public class ChatLayout extends JFrame {
                 new WeatherLayout();
             }
         });
+        clientBack.setGui(this);
+        clientBack.setUserInfo(nickName, ipAddress, portNum);
+        clientBack.start(); // 채팅창이 켜짐과 동시에 접속을 실행해줍니다.
     }
     public void appendMessage(String Message) {
         ChatArea.append(Message);

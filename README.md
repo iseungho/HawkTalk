@@ -27,21 +27,24 @@
 ![Untitled](https://user-images.githubusercontent.com/112773313/209364871-7b074d59-5833-4ecc-9b21-b9579e868654.png)
 
 ---
+## 실행시 주의사항
+- 다른 컴퓨터에서 통신할 땐 `LogInLayout` 클래스에 있는 `ipAddress` 를 `localhost` 에서 서버의 IP주소로 수정하여 사용한다.
+---
 
 ## **실행화면과 기능설명**
 
 ### 로그인/로그아웃 기능, 사용자 등록/수정/삭제
 
-- `JDBCconnector` 을 이용하여 `MySQL` DB 접속을 통해 사용자의 정보를 저장 및 관리한다.
+- `JDBCconnector` 클래스를 이용하여 `MySQL` DB 접속을 통해 사용자의 정보를 저장 및 관리한다.
 
 ![Untitled 1](https://user-images.githubusercontent.com/112773313/209364647-d0f8ef45-3301-4f68-ad13-580a04fdac48.png)
 ![Untitled 2](https://user-images.githubusercontent.com/112773313/209364673-e8eef56b-34d1-4eff-9132-44820ac89d60.png)
 
 ### 온라인 유저 목록 확인 기능
 
-- 클라이언트가 접속하면 `ServerBack` 에 있는 `clientThreadList` 에 해당 스레드를 추가한다.
-- 그 후 `ClientBack` 에서 접속한 클라이언트의 닉네임을 서버로 전송한다.
-- `ServerBack` 이 받은 닉네임은 `nickNameList` 에 추가하고 접속중인 모든 클라이언트의 유저목록을 Clear한 후 다시 `ServerBack` 에 있는  `nickNameList` 에 있는 모든 닉네임을 추가한다.
+- 클라이언트가 접속하면 `ServerBack` 클래스 에 있는 `clientThreadList` 에 해당 스레드를 추가한다.
+- 그 후 `ClientBack` 클래스 에서 접속한 클라이언트의 닉네임을 서버로 전송한다.
+- `ServerBack` 클래스가 받은 닉네임은 `nickNameList` 에 추가하고 접속중인 모든 클라이언트의 유저목록을 Clear한 후 다시 `ServerBack` 클래스 에 있는  `nickNameList` 에 있는 모든 닉네임을 추가한다.
 
 ![Untitled 3](https://user-images.githubusercontent.com/112773313/209364688-b5278eb6-fbec-4238-9d33-731394a40c2c.png)
 
@@ -54,15 +57,15 @@
 
 ### 그룹 채팅 기능
 
-- 채팅방을 만들면 `ServerBack` 의 `roomMap` 에 채팅방의 이름과 새로운 포트번호를 갖는 `ServerBack` 을 추가한다.
-- 각 채팅방은 각각의 `ServerBack` 과 통신한다.
+- 채팅방을 만들면 `ServerBack` 클래스 의 `roomMap` 에 채팅방의 이름과 새로운 포트번호를 갖는 `ServerBack` 클래스를 추가한다.
+- 각 채팅방은 각각의 `ServerBack` 클래스와 통신한다.
 
 ![Untitled 5](https://user-images.githubusercontent.com/112773313/209364726-6abdf437-ff1d-4038-aaaf-3be99695277d.png)
 
 ### 온라인 그림판 기능
 
 - 채팅방에서 그림을 그리면 해당 좌표를 명령어와 함께 서버로 보낸다.
-- 서버는 해당 좌표와 명령어를 채팅방에 있는 모든 유저들의  `GroupChatBack` 으로 보낸 후 해당 좌표에 실시간으로 그린다.
+- 서버는 해당 좌표와 명령어를 채팅방에 있는 모든 유저들의  `GroupChatBack` 클래스로 보낸 후 해당 좌표에 실시간으로 그린다.
 
 ![Untitled 6](https://user-images.githubusercontent.com/112773313/209364742-094d144d-0931-45a0-960d-47dd219a6cf5.png)
 
